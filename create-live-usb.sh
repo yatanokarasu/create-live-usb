@@ -18,6 +18,7 @@ shared_part_size=0
 # Commands
 readonly CMD_CD=$(command -v cd)
 readonly CMD_CP=$(command -v cp)
+readonly CMD_DD=$(command -v dd)
 readonly CMD_CAT=$(command -v cat)
 readonly CMD_PWD=$(command -v pwd)
 readonly CMD_MKDIR=$(command -v mkdir)
@@ -207,6 +208,9 @@ set -o verbose -o xtrace
 #-----------------------------
 # Create partitions
 #-----------------------------
+
+### Delete from boot sector to first partition
+${CMD_DD} if=/dev/zero of=/dev/sdb seek=1 count=2047
 
 ### purge all partition information
 ${CMD_SGDISK} --zap-all ${usb_device}
